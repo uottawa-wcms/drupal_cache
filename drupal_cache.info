@@ -1,0 +1,4 @@
+name = Drupal Cache
+description = "Clears the Drupal Cache on expire"
+package = External Cache
+core = 7.x

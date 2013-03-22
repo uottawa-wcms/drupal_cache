@@ -1,0 +1,28 @@
+<?php
+
+function varnish_cache_cache_wipe($paths) {
+  global $base_url;
+  $full_paths = array();
+  foreach ($paths as $path) {
+    if (substr($path, 0, 1) == '/') {
+      $full_paths[] = $base_url . $path;
+    } elseif (strpos($path, '://') === FALSE) {
+      $full_paths[] = $base_url . '/' . $path;
+    } else {
+      $full_paths[] = $path;
+    }
+  }
+  foreach ($full_paths as $path) {
+    if (strpos($path, 'https://') !== FALSE) {
+      $full_paths[] = str_replace('https://', 'http://', $path);
+    }
+  }
+  db_delete('cache_page')
+      ->condition('cid', $full_paths, 'IN')
+      ->execute();
+}
+
+function varnish_cache_cache_wipe_all() {
+  db_truncate('cache_page')->execute();
+}
+
