@@ -1,6 +1,6 @@
 <?php
 
-function varnish_cache_cache_wipe($paths) {
+function drupal_cache_cache_wipe($paths) {
   global $base_url;
   $full_paths = array();
   foreach ($paths as $path) {
@@ -22,7 +22,7 @@ function varnish_cache_cache_wipe($paths) {
       ->execute();
 }
 
-function varnish_cache_cache_wipe_all() {
+function drupal_cache_cache_wipe_all() {
   db_truncate('cache_page')->execute();
 }
 
